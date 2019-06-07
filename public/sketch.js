@@ -1,13 +1,21 @@
 var circles=[];
+var timage;
+function preload(){
+    timage=loadImage("image.jpg");
+}
 function setup(){
+    timage.resize(600,600);
     createCanvas(600,600);
-    circles.push(new Circle(random(width),random(height)));
 }
 function draw(){  
     background(0);
-    var result=addCircle();
-    if(result[0]){
-        circles.push(result[1]);
+    var count=0;
+    while(count<100){
+        var result=addCircle();
+        if(result[0]){
+            circles.push(result[1]);
+        }
+        count++;
     }
     for(var i in circles){
         if(circles[i].wallCheck() || circles[i].overlap(circles)){
@@ -28,7 +36,15 @@ function addCircle(){
         }
     }
     if(valid){
-        return [true,new Circle(x,y)];
+        timage.loadPixels();
+        var index=(floor(x)+floor(y)*timage.width)*4;
+        var color={
+            r:timage.pixels[index],
+            g:timage.pixels[index+1],
+            b:timage.pixels[index+2],
+            t:timage.pixels[index+3]
+        }
+        return [true,new Circle(x,y,color)];
     }
     else{
         return [false];
