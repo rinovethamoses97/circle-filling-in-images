@@ -1,7 +1,7 @@
 var circles=[];
 var timage;
 function preload(){
-    timage=loadImage("image.jpg");
+    timage=loadImage("bliss.jpg");
 }
 function setup(){
     timage.resize(600,600);
